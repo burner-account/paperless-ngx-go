@@ -13,6 +13,9 @@ client, err := paperless.NewXClientWithToken(
 )
 // error handling
 
+ctx, cancel := context.WithTimeout(context.Background, 2 * time.Second)
+defer cancel()
+
 status, err := client.StatusRetrieveWithResponse(ctx)
 // error handling
 
@@ -53,9 +56,9 @@ make generate
 ```
 This will
 - remove old generated files
-- create a patched OpenAPI spec (see patches/api.yaml.diff)
+- create a patched OpenAPI spec (see patch/api.yaml.diff)
 - generate client code via oapi-codegen (go tool)
-- patch remaining container pointers in client (see patches/de-ptrize.diff)
+- patch remaining container pointers in client (see patch/de-ptrize.diff)
 - cleanup tmp files
 
 
