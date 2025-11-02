@@ -1,0 +1,14 @@
+--- ./api.orig.yaml	2025-10-31 14:55:05.684412726 +0100
++++ ./api.yaml	2025-10-31 15:14:46.469952022 +0100
+@@ -1613,7 +1613,10 @@
+           content:
+             application/json:
+               schema:
+-                $ref: '#/components/schemas/PaginatedNotesList'
++                type: array
++                items:
++                  $ref: '#/components/schemas/Notes'
++                readOnly: true
+           description: ''
+         '400':
+           description: No response body

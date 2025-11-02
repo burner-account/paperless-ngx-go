@@ -1,0 +1,218 @@
+--- ./client.gen.go.orig	2025-10-31 20:52:03.370435265 +0100
++++ ./client.gen.go	2025-10-31 18:16:52.439923958 +0100
+@@ -20566,7 +20566,7 @@
+ type ConfigListHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]ApplicationConfiguration
++	JSON200      []ApplicationConfiguration
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -21419,7 +21419,7 @@
+ type DocumentsNotesListHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]Notes
++	JSON200      []Notes
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -21485,7 +21485,7 @@
+ type DocumentShareLinksHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]struct {
++	JSON200      []struct {
+ 		Created    *time.Time `json:"created,omitempty"`
+ 		Expiration *time.Time `json:"expiration,omitempty"`
+ 		Id         *int       `json:"id,omitempty"`
+@@ -21687,7 +21687,7 @@
+ type LogsListHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]string
++	JSON200      []string
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -21709,7 +21709,7 @@
+ type RetrieveLogHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]string
++	JSON200      []string
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22214,7 +22214,7 @@
+ type ProfileSocialAccountProvidersRetrieveHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *map[string]interface{}
++	JSON200      map[string]interface{}
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22259,7 +22259,7 @@
+ type ProfileTotpRetrieveHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *map[string]interface{}
++	JSON200      map[string]interface{}
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22281,7 +22281,7 @@
+ type ProfileTotpCreateHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *map[string]interface{}
++	JSON200      map[string]interface{}
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22303,7 +22303,7 @@
+ type RemoteVersionRetrieveHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *map[string]interface{}
++	JSON200      map[string]interface{}
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22478,7 +22478,7 @@
+ type SearchAutocompleteListHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]string
++	JSON200      []string
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22631,7 +22631,7 @@
+ type StatisticsRetrieveHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *map[string]interface{}
++	JSON200      map[string]interface{}
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -22959,7 +22959,7 @@
+ type TasksListHTTPResponse struct {
+ 	Body         []byte
+ 	HTTPResponse *http.Response
+-	JSON200      *[]TasksView
++	JSON200      []TasksView
+ }
+ 
+ // Status returns HTTPResponse.Status
+@@ -26024,7 +26024,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -26988,7 +26988,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -27071,7 +27071,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -27295,7 +27295,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -27321,7 +27321,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -27903,7 +27903,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -27962,7 +27962,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -27988,7 +27988,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -28014,7 +28014,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -28212,7 +28212,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -28384,7 +28384,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
+@@ -28754,7 +28754,7 @@
+ 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+ 			return nil, err
+ 		}
+-		response.JSON200 = &dest
++		response.JSON200 = dest
+ 
+ 	}
+ 
