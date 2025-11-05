@@ -13,7 +13,7 @@ client, err := paperless.NewXClientWithToken(
 )
 // error handling
 
-ctx, cancel := context.WithTimeout(context.Background, 2 * time.Second)
+ctx, cancel := context.WithTimeout(context.Background(), 2 * time.Second)
 defer cancel()
 
 status, err := client.StatusRetrieveWithResponse(ctx)
