@@ -7,7 +7,10 @@ import (
 	"net/http"
 )
 
-const defaultAPIVersion int = 9
+const (
+	defaultAPIVersion int    = 9
+	apiDateTimeFormat string = "2006-01-02 15:04:05-07:00"
+)
 
 //go:generate go tool oapi-codegen -config cfg.yaml api.yaml
 
