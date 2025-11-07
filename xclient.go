@@ -62,7 +62,7 @@ func (d *DocumentCreate) Params() map[string]interface{} {
 		output["title"] = *d.Title
 	}
 	if d != nil && d.Created != nil {
-		output["created"] = d.Created.Format(apiDateTimeFormat)
+		output["created"] = d.Created.Format(APIDateTimeFormat)
 	}
 	if d != nil && d.DocumentType != nil {
 		output["document_type"] = fmt.Sprintf("%d", *d.DocumentType)
