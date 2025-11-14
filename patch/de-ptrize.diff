@@ -1,5 +1,5 @@
---- ./client.gen.go.orig	2025-10-31 20:52:03.370435265 +0100
-+++ ./client.gen.go	2025-10-31 18:16:52.439923958 +0100
+--- ./client.gen.go.orig	2025-11-14 01:29:25.503015414 +0100
++++ ./client.gen.go	2025-11-14 01:29:15.252296903 +0100
 @@ -20566,7 +20566,7 @@
  type ConfigListHTTPResponse struct {
  	Body         []byte

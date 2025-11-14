@@ -6724,8 +6724,10 @@ components:
         has_archive_version:
           type: boolean
         original_metadata:
-          type: object
-          additionalProperties: {}
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
         archive_checksum:
           type: string
         archive_media_filename:
@@ -6735,8 +6737,10 @@ components:
         archive_size:
           type: integer
         archive_metadata:
-          type: object
-          additionalProperties: {}
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
         lang:
           type: string
       required:

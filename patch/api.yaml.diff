@@ -1,5 +1,5 @@
---- ./api.orig.yaml	2025-10-31 14:55:05.684412726 +0100
-+++ ./api.yaml	2025-10-31 15:14:46.469952022 +0100
+--- ./patch/api.yaml.orig	2025-10-31 14:55:05.684412726 +0100
++++ ./api.yaml	2025-11-14 01:17:02.029944283 +0100
 @@ -1613,7 +1613,10 @@
            content:
              application/json:
@@ -12,3 +12,29 @@
            description: ''
          '400':
            description: No response body
+@@ -6721,8 +6724,10 @@
+         has_archive_version:
+           type: boolean
+         original_metadata:
+-          type: object
+-          additionalProperties: {}
++          type: array
++          items:
++            type: object
++            additionalProperties: {}
+         archive_checksum:
+           type: string
+         archive_media_filename:
+@@ -6732,8 +6737,10 @@
+         archive_size:
+           type: integer
+         archive_metadata:
+-          type: object
+-          additionalProperties: {}
++          type: array
++          items:
++            type: object
++            additionalProperties: {}
+         lang:
+           type: string
+       required:

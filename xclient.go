@@ -7,6 +7,7 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -82,7 +83,7 @@ func (d *DocumentCreate) Params() map[string]interface{} {
 	return output
 }
 
-func (x *XClient) DocumentsPostDocumentCreateWithBodyWithResponse(
+func (x XClient) DocumentsPostDocumentCreateWithBodyWithResponse(
 	ctx context.Context,
 	fullFilepath string,
 	optionalData *DocumentCreate,
@@ -139,4 +140,102 @@ func newFileMultipartBody(paramName, path string, params map[string]interface{})
 	}
 
 	return body, writer.FormDataContentType(), nil
+}
+
+func (x XClient) UploadDocument(ctx context.Context, filepath, title string, created time.Time, tagIDs []int) (string, error) {
+	var tags []string
+	if len(tagIDs) > 0 {
+		tags = make([]string, len(tagIDs))
+		for idx, tagID := range tagIDs {
+			tags[idx] = strconv.Itoa(tagID)
+		}
+	}
+	docResp, err := x.DocumentsPostDocumentCreateWithBodyWithResponse(
+		ctx,
+		filepath,
+		&DocumentCreate{
+			Title:   P(title),
+			Created: P(created),
+			Tags:    tags,
+		},
+	)
+	if err != nil {
+		return "", fmt.Errorf("failed to upload document: %w", err)
+	}
+	if docResp.JSON200 == nil {
+		return "", fmt.Errorf("missing json response, not task waiting for '%s'", filepath)
+
+	}
+	return *docResp.JSON200, nil
+}
+
+func (x XClient) WaitForDocumentUpload(ctx context.Context, filepath, title string, created time.Time, tagIDs []int) error {
+	taskId, err := x.UploadDocument(ctx, filepath, title, created, tagIDs)
+	if err != nil {
+		return err
+	}
+	err = x.WaitForTask(ctx, taskId, 2*time.Second)
+	if err != nil {
+		err = fmt.Errorf("failed to upload '%s': %w", filepath, err)
+	}
+	return err
+
+}
+
+func (x XClient) FetchTask(ctx context.Context, taskID string) (*TasksView, error) {
+	taskResp, err := x.TasksListWithResponse(ctx, &TasksListParams{
+		TaskId: &taskID,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve task: %w", err)
+	}
+	if taskResp.JSON200 == nil {
+		return nil, fmt.Errorf("response json nil (list tasks)")
+	}
+	for _, task := range taskResp.JSON200 {
+		if task.TaskId == taskID {
+			return &task, nil
+		}
+	}
+	return nil, fmt.Errorf("task not found")
+}
+
+func (x XClient) WaitForTask(ctx context.Context, taskID string, pollInterval time.Duration) error {
+	if pollInterval < 2000*time.Millisecond {
+		pollInterval = 2000 * time.Millisecond
+	}
+	ticker := time.NewTicker(pollInterval)
+	for {
+		select {
+		case <-ctx.Done():
+			return fmt.Errorf("waiting for task id '%s' timed out", taskID)
+		case <-ticker.C:
+			innerCtx, cancel := context.WithTimeout(context.Background(), pollInterval-500*time.Millisecond)
+			task, err := x.FetchTask(innerCtx, taskID)
+			cancel()
+			if err != nil {
+				continue
+				// return fmt.Errorf("waiting for task id '%s' failed: %w", taskID, err)
+			}
+			if *task.Status == StatusEnumFAILURE || *task.Status == StatusEnumREVOKED {
+				return fmt.Errorf("task with id '%s' has status: %s", taskID, *task.Status)
+			}
+			if StatusEnumSUCCESS == *task.Status {
+				return nil
+			}
+		}
+	}
+}
+
+func (x XClient) GetAllDocuments(ctx context.Context) ([]Document, error) {
+	docResp, err := x.DocumentsListWithResponse(ctx, &DocumentsListParams{
+		PageSize: P(9999999),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("GetAllDocumentss failed: %w", err)
+	}
+	if docResp.JSON200 == nil {
+		return nil, fmt.Errorf("GetAllDocumentss failed: document json response nil")
+	}
+	return docResp.JSON200.Results, nil
 }

@@ -1136,18 +1136,18 @@ type MatchingAlgorithm int
 
 // Metadata defines model for Metadata.
 type Metadata struct {
-	ArchiveChecksum      string                 `json:"archive_checksum"`
-	ArchiveMediaFilename string                 `json:"archive_media_filename"`
-	ArchiveMetadata      map[string]interface{} `json:"archive_metadata"`
-	ArchiveSize          int                    `json:"archive_size"`
-	HasArchiveVersion    bool                   `json:"has_archive_version"`
-	Lang                 string                 `json:"lang"`
-	MediaFilename        string                 `json:"media_filename"`
-	OriginalChecksum     string                 `json:"original_checksum"`
-	OriginalFilename     string                 `json:"original_filename"`
-	OriginalMetadata     map[string]interface{} `json:"original_metadata"`
-	OriginalMimeType     string                 `json:"original_mime_type"`
-	OriginalSize         int                    `json:"original_size"`
+	ArchiveChecksum      string                   `json:"archive_checksum"`
+	ArchiveMediaFilename string                   `json:"archive_media_filename"`
+	ArchiveMetadata      []map[string]interface{} `json:"archive_metadata"`
+	ArchiveSize          int                      `json:"archive_size"`
+	HasArchiveVersion    bool                     `json:"has_archive_version"`
+	Lang                 string                   `json:"lang"`
+	MediaFilename        string                   `json:"media_filename"`
+	OriginalChecksum     string                   `json:"original_checksum"`
+	OriginalFilename     string                   `json:"original_filename"`
+	OriginalMetadata     []map[string]interface{} `json:"original_metadata"`
+	OriginalMimeType     string                   `json:"original_mime_type"`
+	OriginalSize         int                      `json:"original_size"`
 }
 
 // MethodEnum * `set_correspondent` - set_correspondent
